@@ -5,7 +5,7 @@ import java.util.Random;
 public class EmployeeWageComputation {
     static int wagePerHour = 20;
     static int fullDayHour = 8;
-    static int partTimehour = 8;
+    static int partTimeHour = 8;
 
 
     public static void main(String[] args) {
@@ -19,6 +19,9 @@ public class EmployeeWageComputation {
 
         int partTimeWage = calculatePartTimeWage();
         System.out.println("\nPart time wage: $" + partTimeWage);
+
+        calculateWageWithSwitchCase();
+
     }
 
     public static void checkAttendance() {
@@ -35,7 +38,31 @@ public class EmployeeWageComputation {
         return wagePerHour * fullDayHour;
     }
     public static int calculatePartTimeWage(){
-        return wagePerHour * partTimehour;
+        return wagePerHour * partTimeHour;
+    }
+    public static void calculateWageWithSwitchCase() {
+        Random random = new Random();
+        int empType = random.nextInt(3);
+
+        System.out.println("Solving Using Switch Case:");
+        int empHours = 0;
+        switch (empType) {
+            case 0:
+                System.out.println("Employee is Absent. No wage.");
+                empHours = 0;
+                break;
+            case 1:
+                System.out.println("Employee is Full-Time.");
+                empHours = fullDayHour;
+                break;
+            case 2:
+                System.out.println("Employee is Part-Time.");
+                empHours = partTimeHour;
+                break;
+        }
+
+        int wage = empHours * wagePerHour;
+        System.out.println("Wage: $" + wage);
     }
 
 }
