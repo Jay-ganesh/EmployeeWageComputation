@@ -7,6 +7,7 @@ public class EmployeeWageComputation {
     static int fullDayHour = 8;
     static int partTimeHour = 8;
     static int workingDaysPerMonth = 20;
+    static int maxHoursInMonth = 100;
 
     public static void main(String[] args) {
 
@@ -21,7 +22,10 @@ public class EmployeeWageComputation {
         System.out.println("\nPart time wage: $" + partTimeWage);
 
         calculateWageWithSwitchCase();
-        calculateWageForMonth();
+        int monthlyWage = calculateWageForMonth();
+        System.out.println("\nTotal Wage for a Month: $" + monthlyWage);
+        int totalWage = calculateWageTillCondition();
+        System.out.println("\nTotal Wage till 100 hours or 20 days: $" + totalWage);
 
     }
 
@@ -72,7 +76,40 @@ public class EmployeeWageComputation {
         }
         return totalWage;
     }
+    public static int calculateWageTillCondition() {
+        int totalHours = 0;
+        int totalDays = 0;
+        int totalWage = 0;
 
+        Random random = new Random();
 
+        while (totalHours < maxHoursInMonth && totalDays < workingDaysPerMonth) {
+            int empType = random.nextInt(3);
+            int empHours = 0;
+
+            switch (empType) {
+                case 1:
+                    empHours = fullDayHour;
+                    break;
+                case 2:
+                    empHours = partTimeHour;
+                    break;
+                default:
+                    empHours = 0;
+            }
+
+            totalHours += empHours;
+            totalDays++;
+
+            if (totalHours > maxHoursInMonth) {
+                totalHours = maxHoursInMonth;
+            }
+
+            totalWage += empHours * wagePerHour;
+        }
+
+        System.out.println("Total Days Worked: " + totalDays + ", Total Hours Worked: " + totalHours);
+        return totalWage;
+    }
 }
 
