@@ -6,7 +6,7 @@ public class EmployeeWageComputation {
     static int wagePerHour = 20;
     static int fullDayHour = 8;
     static int partTimeHour = 8;
-
+    static int workingDaysPerMonth = 20;
 
     public static void main(String[] args) {
 
@@ -21,6 +21,7 @@ public class EmployeeWageComputation {
         System.out.println("\nPart time wage: $" + partTimeWage);
 
         calculateWageWithSwitchCase();
+        calculateWageForMonth();
 
     }
 
@@ -64,6 +65,14 @@ public class EmployeeWageComputation {
         int wage = empHours * wagePerHour;
         System.out.println("Wage: $" + wage);
     }
+    public static int calculateWageForMonth() {
+        int totalWage = 0;
+        for (int day = 1; day <= workingDaysPerMonth; day++) {
+            totalWage += calculateDailyWage();
+        }
+        return totalWage;
+    }
+
 
 }
 
