@@ -3,113 +3,49 @@ package com.bridgelabz.employeeWageComputation;
 import java.util.Random;
 
 public class EmployeeWageComputation {
-    static int wagePerHour = 20;
-    static int fullDayHour = 8;
-    static int partTimeHour = 8;
-    static int workingDaysPerMonth = 20;
-    static int maxHoursInMonth = 100;
+        private static final int IS_PART_TIME = 1;
+        private static final int IS_FULL_TIME = 2;
 
-    public static void main(String[] args) {
+        public static void computeEmployeeWage(String company, int empRatePerHour, int numOfWorkingDays, int maxHoursPerMonth) {
+            int totalEmpHrs = 0, totalWorkingDays = 0, totalEmpWage = 0;
 
-        System.out.println("Welcome to Employee Wage Computation Program on Master Branch!");
+            System.out.println("Calculating Employee Wage for Company: " + company);
 
-        checkAttendance();
+            while (totalEmpHrs <= maxHoursPerMonth && totalWorkingDays < numOfWorkingDays) {
+                totalWorkingDays++;
+                int empHrs = 0;
 
-        int dailyWage = calculateDailyWage();
-        System.out.println("\nDaily Employee Wage: $" + dailyWage);
+                Random random = new Random();
+                int empCheck = random.nextInt(3);
 
-        int partTimeWage = calculatePartTimeWage();
-        System.out.println("\nPart time wage: $" + partTimeWage);
+                switch (empCheck) {
+                    case IS_FULL_TIME:
+                        empHrs = 8;
+                        break;
+                    case IS_PART_TIME:
+                        empHrs = 4;
+                        break;
+                    default:
+                        empHrs = 0;
+                }
 
-        calculateWageWithSwitchCase();
-        int monthlyWage = calculateWageForMonth();
-        System.out.println("\nTotal Wage for a Month: $" + monthlyWage);
-        int totalWage = calculateWageTillCondition();
-        System.out.println("\nTotal Wage till 100 hours or 20 days: $" + totalWage);
+                totalEmpHrs += empHrs;
+                int dailyWage = empHrs * empRatePerHour;
+                totalEmpWage += dailyWage;
 
-    }
-
-    public static void checkAttendance() {
-        Random random = new Random();
-        int attendance = random.nextInt(2);
-        if (attendance == 1) {
-            System.out.println("The employee is Present.");
-        } else {
-            System.out.println("The employee is Absent.");
-        }
-    }
-
-    public static int calculateDailyWage() {
-        return wagePerHour * fullDayHour;
-    }
-    public static int calculatePartTimeWage(){
-        return wagePerHour * partTimeHour;
-    }
-    public static void calculateWageWithSwitchCase() {
-        Random random = new Random();
-        int empType = random.nextInt(3);
-
-        System.out.println("Solving Using Switch Case:");
-        int empHours = 0;
-        switch (empType) {
-            case 0:
-                System.out.println("Employee is Absent. No wage.");
-                empHours = 0;
-                break;
-            case 1:
-                System.out.println("Employee is Full-Time.");
-                empHours = fullDayHour;
-                break;
-            case 2:
-                System.out.println("Employee is Part-Time.");
-                empHours = partTimeHour;
-                break;
-        }
-
-        int wage = empHours * wagePerHour;
-        System.out.println("Wage: $" + wage);
-    }
-    public static int calculateWageForMonth() {
-        int totalWage = 0;
-        for (int day = 1; day <= workingDaysPerMonth; day++) {
-            totalWage += calculateDailyWage();
-        }
-        return totalWage;
-    }
-    public static int calculateWageTillCondition() {
-        int totalHours = 0;
-        int totalDays = 0;
-        int totalWage = 0;
-
-        Random random = new Random();
-
-        while (totalHours < maxHoursInMonth && totalDays < workingDaysPerMonth) {
-            int empType = random.nextInt(3);
-            int empHours = 0;
-
-            switch (empType) {
-                case 1:
-                    empHours = fullDayHour;
-                    break;
-                case 2:
-                    empHours = partTimeHour;
-                    break;
-                default:
-                    empHours = 0;
+                System.out.println("Day: " + totalWorkingDays + " | Hours Worked: " + empHrs + " | Daily Wage: " + dailyWage);
             }
 
-            totalHours += empHours;
-            totalDays++;
-
-            if (totalHours > maxHoursInMonth) {
-                totalHours = maxHoursInMonth;
-            }
-
-            totalWage += empHours * wagePerHour;
+            System.out.println("Total Employee Wage for Company " + company + ": " + totalEmpWage);
+            System.out.println("=============================================");
         }
 
-        System.out.println("Total Days Worked: " + totalDays + ", Total Hours Worked: " + totalHours);
-        return totalWage;
-    }
+        public static void main(String[] args) {
+            System.out.println("Welcome to Employee Wage Computation Program!");
+            
+            computeEmployeeWage("Google", 20, 20, 100);
+            computeEmployeeWage("Amazon", 25, 22, 120);
+            computeEmployeeWage("Microsoft", 30, 25, 150);
+        }
 }
 
